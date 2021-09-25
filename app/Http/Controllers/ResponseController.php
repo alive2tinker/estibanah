@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreForm;
-use App\Models\Form;
+use App\Models\Response;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-class FormController extends Controller
+class ResponseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +24,7 @@ class FormController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Forms/Create');
+        //
     }
 
     /**
@@ -35,18 +33,18 @@ class FormController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreForm $request)
+    public function store(Request $request)
     {
-        dd($request);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Form  $form
+     * @param  \App\Models\Response  $response
      * @return \Illuminate\Http\Response
      */
-    public function show(Form $form)
+    public function show(Response $response)
     {
         //
     }
@@ -54,10 +52,10 @@ class FormController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Form  $form
+     * @param  \App\Models\Response  $response
      * @return \Illuminate\Http\Response
      */
-    public function edit(Form $form)
+    public function edit(Response $response)
     {
         //
     }
@@ -66,10 +64,10 @@ class FormController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Form  $form
+     * @param  \App\Models\Response  $response
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Form $form)
+    public function update(Request $request, Response $response)
     {
         //
     }
@@ -77,10 +75,10 @@ class FormController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Form  $form
+     * @param  \App\Models\Response  $response
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Form $form)
+    public function destroy(Response $response)
     {
         //
     }
