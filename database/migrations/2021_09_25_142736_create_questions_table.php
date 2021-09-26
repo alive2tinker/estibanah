@@ -19,7 +19,6 @@ class CreateQuestionsTable extends Migration
             $table->text('description')->nullable();
             $table->enum('type', ['short','long','multiple','checkbox', 'file','date']);
             $table->boolean('required')->default(0);
-            $table->text('conditions')->nullable();
             $table->foreignId('form_id')->onDelete('cascade');
             $table->timestamps();
         });

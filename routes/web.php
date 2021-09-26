@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Resources\FormResource;
 use App\Http\Resources\FormResponseResource;
 use App\Models\FormResponse;
@@ -39,3 +40,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::resource('forms', FormController::class);
+Route::resource('questions', QuestionController::class);

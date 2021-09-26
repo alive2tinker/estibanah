@@ -25,7 +25,10 @@ class StoreForm extends FormRequest
     {
         return [
             'title' => "required",
-            'description' => "required"
+            'description' => "required",
+            'questions' => "required",
+            'questions.*.text' => "required",
+            'questions.*.answers' => "required_if:questions.*.type,multiple|required_if:questions.*.type,checkbox"
         ];
     }
 }

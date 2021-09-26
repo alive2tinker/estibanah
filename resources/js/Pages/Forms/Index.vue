@@ -294,7 +294,7 @@
             <div class="bg-white shadow overflow-hidden sm:rounded-md">
                 <ul role="list" class="divide-y divide-gray-200">
                     <li v-for="form in forms.data" :key="form.id">
-                        <a href="#" class="block hover:bg-gray-50">
+                        <a :href="route('forms.show', form.id)" class="block hover:bg-gray-50">
                             <div class="px-4 py-4 sm:px-6">
                                 <div class="flex items-center justify-between">
                                     <p

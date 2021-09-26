@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreForm;
+use App\Http\Resources\FormDetailResource;
 use App\Models\Form;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class FormController extends Controller
@@ -37,7 +39,38 @@ class FormController extends Controller
      */
     public function store(StoreForm $request)
     {
-        dd($request);
+        // dd($request);
+        $form = Auth::user()->forms()->create([
+            'title' => $request->input('title'),
+            'description' => $request->input('description')
+        ]);
+
+        foreach($request->input('questions') as $nuQuestion)
+        {
+            $question = $form->questions()->create([
+                'text' => $nuQuestion['text'],
+                'type' => $nuQuestion['type'],
+                'description' => $nuQuestion['description']
+            ]);
+
+            if($nuQuestion['type'] === 'multiple' || $nuQuestion['type'] === 'checkbox'){
+                foreach($nuQuestion['answers'] as $potentialAnswer){
+                    $question->answers()->create([
+                        'text' => $potentialAnswer['text']
+                    ]);
+                }
+            }
+
+            foreach($nuQuestion['conditions'] as $condition){
+                $question->conditions()->create([
+                    'operation' => $condition['operation'],
+                    'value' => $condition['value'],
+                    'independent_question_id' => $condition['question']
+                ]);
+            }
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -48,7 +81,9 @@ class FormController extends Controller
      */
     public function show(Form $form)
     {
-        //
+        return Inertia::render('Forms/Show', [
+            'form' => new FormDetailResource($form)
+        ]);
     }
 
     /**

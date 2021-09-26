@@ -20,4 +20,9 @@ class Form extends Model
     {
         return $this->hasMany(FormResponse::class);
     }
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
 }

@@ -68,17 +68,7 @@
                                             type="text"
                                             v-model="form.title"
                                             id="username"
-                                            class="
-                                                flex-1
-                                                focus:ring-indigo-500
-                                                focus:border-indigo-500
-                                                block
-                                                w-full
-                                                min-w-0
-                                                rounded-none rounded-r-md
-                                                sm:text-sm
-                                                border-gray-300
-                                            "
+                                            :class="{'flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300':true, 'border-red-600': errors.title}"
                                         />
                                     </div>
                                 </div>
@@ -100,16 +90,8 @@
                                             id="about"
                                             v-model="form.description"
                                             rows="3"
-                                            class="
-                                                shadow-sm
-                                                focus:ring-indigo-500
-                                                focus:border-indigo-500
-                                                block
-                                                w-full
-                                                sm:text-sm
-                                                border border-gray-300
-                                                rounded-md
-                                            "
+                                            :class="{'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md':true, 'border-red-600': errors.description}"
+                                            
                                         ></textarea>
                                     </div>
                                     <p class="mt-2 text-sm text-gray-500">
@@ -190,16 +172,7 @@
                                                 type="text"
                                                 v-model="question.text"
                                                 id="username"
-                                                class="
-                                                    flex-1
-                                                    focus:ring-indigo-500
-                                                    focus:border-indigo-500
-                                                    block
-                                                    w-full
-                                                    min-w-0
-                                                    rounded-none rounded-r-md
-                                                    sm:text-sm
-                                                    border-gray-300
+                                                :class="{'flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300':true,'border-red-600': errors['questions.'+index+'.text']}
                                                 "
                                             />
                                         </div>
@@ -584,6 +557,9 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 export default defineComponent({
+    props:{
+        errors: Object
+    },
     components: {
         AppLayout,
     },
@@ -628,7 +604,14 @@ export default defineComponent({
         },
         submitForm: function(){
             if(this.validateForm())
-                this.form.post(route('forms.store'));
+                this.form.post(route('forms.store'),{
+                    preserveScroll: true,
+                    onSuccess:() => {
+                        this.form.reset();
+                        this.alert("worked successfully");
+                        window.location.href = '/dashboard';
+                    }
+                });
         }
     }
 });
