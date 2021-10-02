@@ -18,7 +18,8 @@ class FormDetailResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'questions' => QuestionResource::collection($this->questions)
+            'questions' => QuestionResource::collection($this->questions),
+            'published' => $this->published
         ];
     }
 }

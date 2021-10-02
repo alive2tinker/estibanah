@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\FormResponseController;
+use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ResultsExportController;
 use App\Http\Resources\FormResource;
 use App\Http\Resources\FormResponseResource;
 use App\Models\FormResponse;
@@ -39,5 +42,12 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     ]);
 })->name('dashboard');
 
-Route::resource('forms', FormController::class);
-Route::resource('questions', QuestionController::class);
+
+Route::middleware(['auth:sanctum','verified'])->resource('forms', FormController::class);
+Route::middleware(['auth:sanctum','verified'])->resource('questions', QuestionController::class);
+Route::get('/forms/{form}/answer', [FormResponseController::class, 'create'])->name('forms.answer');
+Route::post('/formResponses/{form}', [FormResponseController::class, 'store'])->name('formResponses.store');
+
+Route::post('/invitations', InvitationController::class)->name('invitations');
+
+Route::get('/export-results/{form}', ResultsExportController::class)->name('results.export');

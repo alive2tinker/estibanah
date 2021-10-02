@@ -19,7 +19,8 @@ class FormResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'responses' => count($this->formResponses),
-            'createdAt' => $this->created_at->format('Y-m-d h:i:s')
+            'createdAt' => $this->created_at->format('Y-m-d h:i:s'),
+            'published' => $this->published
         ];
     }
 }

@@ -23,12 +23,17 @@ class StoreForm extends FormRequest
      */
     public function rules()
     {
+        // dd($this->request);
         return [
             'title' => "required",
             'description' => "required",
             'questions' => "required",
             'questions.*.text' => "required",
-            'questions.*.answers' => "required_if:questions.*.type,multiple|required_if:questions.*.type,checkbox"
+            'questions.*.answers' => "required_if:questions.*.type,multiple|required_if:questions.*.type,checkbox",
+            'questions.*.conditions' => "required_if:question.*.hasConditions,true",
+            'questions.*.conditions.*.foreignQuestion' => "required",
+            'questions.*.conditions.*.operation' => "required",
+            'questions.*.conditions.*.value' => "required_unless:questions.*.conditions.*.operation,notEmpty"
         ];
     }
 }

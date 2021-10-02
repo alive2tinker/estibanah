@@ -15,6 +15,10 @@ class CreateResponsesTable extends Migration
     {
         Schema::create('responses', function (Blueprint $table) {
             $table->id();
+            $table->longText('value');
+            $table->foreignId('question_id');
+            $table->foreignId('form_response_id')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable();
             $table->timestamps();
         });
     }

@@ -57,10 +57,16 @@ class User extends Authenticatable
      */
     protected $appends = [
         'profile_photo_url',
+        'isAdmin'
     ];
 
     public function forms()
     {
         return $this->hasMany(Form::class);
+    }
+
+    public function getIsAdminAttribute()
+    {
+        return $this->role === 'admin';
     }
 }

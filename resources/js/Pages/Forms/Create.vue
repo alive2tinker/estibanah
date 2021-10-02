@@ -68,7 +68,10 @@
                                             type="text"
                                             v-model="form.title"
                                             id="username"
-                                            :class="{'flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300':true, 'border-red-600': errors.title}"
+                                            :class="{
+                                                'flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-md sm:text-sm border-gray-300': true,
+                                                'border-red-600': errors.title,
+                                            }"
                                         />
                                     </div>
                                 </div>
@@ -90,8 +93,11 @@
                                             id="about"
                                             v-model="form.description"
                                             rows="3"
-                                            :class="{'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md':true, 'border-red-600': errors.description}"
-                                            
+                                            :class="{
+                                                'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md': true,
+                                                'border-red-600':
+                                                    errors.description,
+                                            }"
                                         ></textarea>
                                     </div>
                                     <p class="mt-2 text-sm text-gray-500">
@@ -130,23 +136,23 @@
                                 <div>
                                     <div class="flex">
                                         <h1 class="py-2">
-                                        Question {{ index + 1 }}
-                                    </h1>
-                                    <span
-                                        class="
-                                            inline-flex
-                                            items-center
-                                            px-2.5
-                                            rounded-full
-                                            text-xs
-                                            font-medium
-                                            bg-indigo-100
-                                            text-indigo-800
-                                            mx-3
-                                        "
-                                    >
-                                        {{ question.type }}
-                                    </span>
+                                            Question {{ index + 1 }}
+                                        </h1>
+                                        <span
+                                            class="
+                                                inline-flex
+                                                items-center
+                                                px-2.5
+                                                rounded-full
+                                                text-xs
+                                                font-medium
+                                                bg-indigo-100
+                                                text-indigo-800
+                                                mx-3
+                                            "
+                                        >
+                                            {{ question.type }}
+                                        </span>
                                     </div>
                                     <div class="sm:col-span-4">
                                         <label
@@ -172,8 +178,15 @@
                                                 type="text"
                                                 v-model="question.text"
                                                 id="username"
-                                                :class="{'flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300':true,'border-red-600': errors['questions.'+index+'.text']}
-                                                "
+                                                :class="{
+                                                    'flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300': true,
+                                                    'border-red-600':
+                                                        errors[
+                                                            'questions.' +
+                                                                index +
+                                                                '.text'
+                                                        ],
+                                                }"
                                             />
                                         </div>
                                     </div>
@@ -305,6 +318,247 @@
                                         <p
                                             class="mt-2 text-sm text-gray-500"
                                         ></p>
+                                    </div>
+                                    <SwitchGroup
+                                        as="div"
+                                        class="flex items-center"
+                                    >
+                                        <Switch
+                                            @click="
+                                                questionIsRequired(question)
+                                            "
+                                            v-model="question.required"
+                                            :class="[
+                                                question.required
+                                                    ? 'bg-indigo-600'
+                                                    : 'bg-gray-200',
+                                                'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500',
+                                            ]"
+                                        >
+                                            <span
+                                                aria-hidden="true"
+                                                :class="[
+                                                    question.required
+                                                        ? 'translate-x-5'
+                                                        : 'translate-x-0',
+                                                    'pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200',
+                                                ]"
+                                            />
+                                        </Switch>
+                                        <SwitchLabel as="span" class="ml-3">
+                                            <span
+                                                class="
+                                                    text-sm
+                                                    font-medium
+                                                    text-gray-900
+                                                "
+                                                >Required?
+                                            </span>
+                                        </SwitchLabel>
+                                    </SwitchGroup>
+                                    <div class="w-full py-4">
+                                        <div
+                                            class="
+                                                w-full
+                                                mx-auto
+                                                bg-white
+                                                rounded-2xl
+                                            "
+                                            v-show="index > 0"
+                                        >
+                                            <Disclosure v-slot="{ open }">
+                                                <DisclosureButton
+                                                    class="
+                                                        flex
+                                                        justify-between
+                                                        w-full
+                                                        px-4
+                                                        py-2
+                                                        text-sm
+                                                        font-medium
+                                                        text-left
+                                                        text-purple-900
+                                                        bg-purple-100
+                                                        rounded-lg
+                                                        hover:bg-purple-200
+                                                        focus:outline-none
+                                                        focus-visible:ring
+                                                        focus-visible:ring-purple-500
+                                                        focus-visible:ring-opacity-75
+                                                    "
+                                                >
+                                                    <span>Conditions</span>
+                                                    <ChevronUpIcon
+                                                        :class="
+                                                            open
+                                                                ? 'transform rotate-180'
+                                                                : ''
+                                                        "
+                                                        class="
+                                                            w-5
+                                                            h-5
+                                                            text-purple-500
+                                                        "
+                                                    />
+                                                </DisclosureButton>
+                                                <DisclosurePanel
+                                                    class="
+                                                        px-4
+                                                        pt-4
+                                                        pb-2
+                                                        text-sm text-gray-500
+                                                    "
+                                                >
+                                                    <div v-if="question.conditions.length > 0">
+                                                        <div
+                                                        class="
+                                                            mt-6
+                                                            grid grid-cols-1
+                                                            gap-y-6 gap-x-4
+                                                            sm:grid-cols-6
+                                                        "
+                                                        v-for="(condition, index) in question.conditions" :key="index"
+                                                    >
+
+                                                        <div
+                                                            class="
+                                                                sm:col-span-2
+                                                            "
+                                                        >
+                                                            <label
+                                                                for="city"
+                                                                class="
+                                                                    block
+                                                                    text-sm
+                                                                    font-medium
+                                                                    text-gray-700
+                                                                "
+                                                            >
+                                                                Prior Question
+                                                            </label>
+                                                            <div class="mt-1">
+                                                                <select v-model="condition.foreignQuestion" class="shadow-sm
+                                                                        focus:ring-indigo-500
+                                                                        focus:border-indigo-500
+                                                                        block
+                                                                        w-full
+                                                                        sm:text-sm
+                                                                        border-gray-300
+                                                                        rounded-md">
+                                                                    <option value="">Choose</option>
+                                                                    <option v-for="(question, index) in priorQuestionsTo(question)" :key="index" :value="question.text">{{question.text}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div
+                                                            class="
+                                                                sm:col-span-2
+                                                            "
+                                                        >
+                                                            <label
+                                                                for="state"
+                                                                class="
+                                                                    block
+                                                                    text-sm
+                                                                    font-medium
+                                                                    text-gray-700
+                                                                "
+                                                            >
+                                                                Operation
+                                                            </label>
+                                                            <div class="mt-1">
+                                                                <select v-model="condition.operation" class="shadow-sm
+                                                                        focus:ring-indigo-500
+                                                                        focus:border-indigo-500
+                                                                        block
+                                                                        w-full
+                                                                        sm:text-sm
+                                                                        border-gray-300
+                                                                        rounded-md">
+                                                                    <option value="">Choose</option>
+                                                                    <option value="notEmpty">Question not empty</option>
+                                                                    <option value="equals">Question response equals to</option>
+                                                                    <option value="notEquals">Question response not equals to</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div
+                                                        v-if="index > 0"
+                                                            class="
+                                                                sm:col-span-2
+                                                            "
+                                                        >
+                                                            <label
+                                                                for="zip"
+                                                                class="
+                                                                    block
+                                                                    text-sm
+                                                                    font-medium
+                                                                    text-gray-700
+                                                                "
+                                                            >
+                                                                Operator
+                                                            </label>
+                                                            <div class="mt-1">
+                                                                <select v-model="condition.operator" class="shadow-sm
+                                                                        focus:ring-indigo-500
+                                                                        focus:border-indigo-500
+                                                                        block
+                                                                        w-full
+                                                                        sm:text-sm
+                                                                        border-gray-300
+                                                                        rounded-md">
+                                                                        <option value="">Choose</option>
+                                                                        <option value="&&">AND</option>
+                                                                        <option value="||">OR</option>
+                                                                        </select>
+                                                            </div>
+                                                        </div>
+                                                        <div
+                                                        v-if="condition.operation != 'notEmpty'"
+                                                            class="
+                                                                sm:col-span-2
+                                                            "
+                                                        >
+                                                            <label
+                                                                for="zip"
+                                                                class="
+                                                                    block
+                                                                    text-sm
+                                                                    font-medium
+                                                                    text-gray-700
+                                                                "
+                                                            >
+                                                                Value
+                                                            </label>
+                                                            <div class="mt-1">
+                                                                <input type="text" v-model="condition.value" class="shadow-sm
+                                                                        focus:ring-indigo-500
+                                                                        focus:border-indigo-500
+                                                                        block
+                                                                        w-full
+                                                                        sm:text-sm
+                                                                        border-gray-300
+                                                                        rounded-md" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button type="button" class="sm:col-span-6 my-4 text-indigo-500" @click="addCondition(question)">Add Condition</button>
+                                                    </div>
+                                                    <!-- This example requires Tailwind CSS v2.0+ -->
+<button v-else @click="addCondition(question)" type="button" class="relative block w-full border-2 border-gray-300 border-dashed rounded-lg p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+  <svg class="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6" />
+  </svg>
+  <span class="mt-2 block text-sm font-medium text-gray-900">
+    Create a new database
+  </span>
+</button>
+                                                </DisclosurePanel>
+                                            </Disclosure>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -473,7 +727,7 @@
                                         <button
                                             type="button"
                                             class="py-2 w-auto"
-                                            @click="newQuesion('file')"
+                                            @click="newQuestion('file')"
                                         >
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -555,13 +809,24 @@
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
+import { Switch, SwitchGroup, SwitchLabel } from "@headlessui/vue";
+import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
+import { ChevronUpIcon } from "@heroicons/vue/solid";
 
 export default defineComponent({
-    props:{
-        errors: Object
+    props: {
+        errors: Object,
     },
     components: {
         AppLayout,
+        Disclosure,
+        Switch,
+        SwitchGroup,
+        SwitchLabel,
+        Disclosure,
+        DisclosureButton,
+        DisclosurePanel,
+        ChevronUpIcon,
     },
     data() {
         return {
@@ -576,6 +841,7 @@ export default defineComponent({
                         conditions: [],
                         required: false,
                         answers: [],
+                        conditions: [],
                     },
                 ],
             }),
@@ -589,6 +855,7 @@ export default defineComponent({
                 type: qType,
                 conditions: [],
                 required: false,
+                hasConditions: false,
                 answers:
                     qType === "multiple" || qType === "checkbox"
                         ? [{ text: "", description: "" }]
@@ -598,22 +865,38 @@ export default defineComponent({
         addPotentialAnswer: function (question) {
             question.answers.push({ text: "", description: "" });
         },
-        validateForm: function()
-        {
-            return true;
+        questionIsRequired: function (question) {
+            question.required = !question.required;
         },
-        submitForm: function(){
-            if(this.validateForm())
-                this.form.post(route('forms.store'),{
-                    preserveScroll: true,
-                    onSuccess:() => {
-                        this.form.reset();
-                        this.alert("worked successfully");
-                        window.location.href = '/dashboard';
-                    }
-                });
-        }
-    }
+        addCondition: function (question) {
+            question.hasConditions = true;
+            question.conditions.push({
+                operation: "notEmpty",
+                foreignQuestion: "",
+                operator: "",
+                value: ""
+            });
+        },
+        priorQuestionsTo: function (question) {
+            var priorQuestions = [];
+            this.form.questions.some((q, index) => {
+                priorQuestions.push(q);
+                return this.form.questions[index + 1].text === question.text;
+            });
+
+            return priorQuestions;
+        },
+        submitForm: function () {
+            this.form.post(route("forms.store"), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    this.form.reset();
+                    alert("worked successfully");
+                    window.location.href = "/dashboard";
+                },
+            });
+        },
+    },
 });
 </script>
 

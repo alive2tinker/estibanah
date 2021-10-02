@@ -15,7 +15,7 @@ class CreateFormResponsesTable extends Migration
     {
         Schema::create('form_responses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('form_id');
+            $table->foreignId('form_id')->onCascade('cascade');
             $table->foreignId('user_id')->nullable();
             $table->timestamps();
         });

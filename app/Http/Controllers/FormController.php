@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreForm;
 use App\Http\Resources\FormDetailResource;
+use App\Http\Resources\FormResource;
+use App\Models\Answer;
 use App\Models\Form;
+use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Models\Condition;
 
 class FormController extends Controller
 {
@@ -45,27 +49,30 @@ class FormController extends Controller
             'description' => $request->input('description')
         ]);
 
-        foreach($request->input('questions') as $nuQuestion)
-        {
+        foreach ($request->input('questions') as $nuQuestion) {
             $question = $form->questions()->create([
                 'text' => $nuQuestion['text'],
                 'type' => $nuQuestion['type'],
-                'description' => $nuQuestion['description']
+                'description' => $nuQuestion['description'],
+                'required' => $nuQuestion['required']
             ]);
 
-            if($nuQuestion['type'] === 'multiple' || $nuQuestion['type'] === 'checkbox'){
-                foreach($nuQuestion['answers'] as $potentialAnswer){
+            if ($nuQuestion['type'] === 'multiple' || $nuQuestion['type'] === 'checkbox') {
+                foreach ($nuQuestion['answers'] as $potentialAnswer) {
                     $question->answers()->create([
                         'text' => $potentialAnswer['text']
                     ]);
                 }
             }
 
-            foreach($nuQuestion['conditions'] as $condition){
-                $question->conditions()->create([
+            foreach ($nuQuestion['conditions'] as $condition) {
+                // dd(Question::where('text', $condition['foreignQuestion'])->first()->id);
+                Condition::create([
                     'operation' => $condition['operation'],
                     'value' => $condition['value'],
-                    'independent_question_id' => $condition['question']
+                    'foreign_question' => Question::where('text', $condition['foreignQuestion'])->first()->id,
+                    'operator' => $condition['operator'],
+                    'question_id' => $question->id
                 ]);
             }
         }
@@ -82,7 +89,7 @@ class FormController extends Controller
     public function show(Form $form)
     {
         return Inertia::render('Forms/Show', [
-            'form' => new FormDetailResource($form)
+            'userForm' => new FormDetailResource($form)
         ]);
     }
 
@@ -94,7 +101,9 @@ class FormController extends Controller
      */
     public function edit(Form $form)
     {
-        //
+        return Inertia::render('Forms/Edit', [
+            'userForm' => new FormDetailResource($form)
+        ]);
     }
 
     /**
@@ -106,7 +115,64 @@ class FormController extends Controller
      */
     public function update(Request $request, Form $form)
     {
-        //
+        if ($request->has('published'))
+            $form->update($request->all());
+        else {
+            $form->update([
+                'title' => $request->input('title'),
+                'description' => $request->input('description')
+            ]);
+
+            foreach ($request->input('questions') as $oldQuestion) {
+                try {
+                    $question = Question::find($oldQuestion['id']);
+                    $question->update([
+                        'text' => $oldQuestion['text'],
+                        'type' => $oldQuestion['type'],
+                        'description' => $oldQuestion['description'],
+                        'required' => $oldQuestion['required']
+                    ]);
+                } catch (\Exception $e) {
+                    $question = $form->questions()->create([
+                        'text' => $oldQuestion['text'],
+                        'type' => $oldQuestion['type'],
+                        'description' => $oldQuestion['description'],
+                        'required' => $oldQuestion['required']
+                    ]);
+                }
+
+                if ($oldQuestion['type'] === 'multiple' || $oldQuestion['type'] === 'checkbox') {
+                    foreach ($oldQuestion['answers'] as $potentialAnswer) {
+                        try {
+                            $answer = Answer::find($potentialAnswer['id']);
+                            $answer->update([
+                                'text' => $potentialAnswer['text']
+                            ]);
+                        } catch (\Exception $e) {
+                            $question->answers()->create([
+                                'text' => $potentialAnswer['text']
+                            ]);
+                        }
+                    }
+                }
+
+                foreach ($oldQuestion['conditions'] as $condition) {
+                    Condition::updateOrCreate(['operation',
+                    'value',
+                    'foreign_question',
+                    'operator',
+                    'question_id'],[
+                        'operation' => $condition['operation'],
+                        'value' => $condition['value'],
+                        'foreign_question' => Question::where('text', $condition['foreignQuestion'])->first()->id,
+                        'operator' => $condition['operator'],
+                        'question_id' => $question->id
+                    ]);
+                }
+            }
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -117,6 +183,8 @@ class FormController extends Controller
      */
     public function destroy(Form $form)
     {
-        //
+        $form->delete();
+
+        return redirect()->route('dashboard');
     }
 }
