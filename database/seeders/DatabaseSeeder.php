@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             'name' => "Abdulmalik Alsufayran",
             'email' => "admin@estibanah.com",
             'password' => bcrypt('YWRtaW4=')
-        ])
+        ]);
         $this->call(FormSeeder::class);
     }
 }
