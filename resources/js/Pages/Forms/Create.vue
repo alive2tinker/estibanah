@@ -2,9 +2,64 @@
     <app-layout title="New Form">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                New Form
+                {{  $t("New Form") }}
             </h2>
         </template>
+        <!-- This example requires Tailwind CSS v2.0+ -->
+        <div v-if="formSuccess" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <!--
+                  Background overlay, show/hide based on modal state.
+
+                  Entering: "ease-out duration-300"
+                    From: "opacity-0"
+                    To: "opacity-100"
+                  Leaving: "ease-in duration-200"
+                    From: "opacity-100"
+                    To: "opacity-0"
+                -->
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+                <!-- This element is to trick the browser into centering the modal contents. -->
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+                <!--
+                  Modal panel, show/hide based on modal state.
+
+                  Entering: "ease-out duration-300"
+                    From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    To: "opacity-100 translate-y-0 sm:scale-100"
+                  Leaving: "ease-in duration-200"
+                    From: "opacity-100 translate-y-0 sm:scale-100"
+                    To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                -->
+                <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+                    <div>
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                            <!-- Heroicon name: outline/check -->
+                            <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-5">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                {{ $t('form submitted successfully') }}
+                            </h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500">
+                                   {{ $t('Just a second before we redirect you to detailed page') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 sm:mt-6">
+                        <a :href="route('dashboard')" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">
+                            {{ $t('Go back to dashboard')}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-5">
             <div class="bg-white rounded-lg shadow p-5">
                 <!--
@@ -35,7 +90,7 @@
                                         text-gray-900
                                     "
                                 >
-                                    Form information
+                                    {{ $t("Form information")}}
                                 </h3>
                                 <p class="mt-1 text-sm text-gray-500">
                                     lets start by the title and description of
@@ -61,7 +116,7 @@
                                             text-gray-700
                                         "
                                     >
-                                        Title
+                                        {{ $t('Title')}}
                                     </label>
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <input
@@ -86,7 +141,7 @@
                                             text-gray-700
                                         "
                                     >
-                                        Description
+                                        {{ $t('Description')}}
                                     </label>
                                     <div class="mt-1">
                                         <textarea
@@ -101,8 +156,7 @@
                                         ></textarea>
                                     </div>
                                     <p class="mt-2 text-sm text-gray-500">
-                                        Write a few sentences that explains the
-                                        purpose of the form.
+                                        {{ $t('Write a few sentences that explains the purpose of the form.')}}
                                     </p>
                                 </div>
                             </div>
@@ -118,10 +172,10 @@
                                         text-gray-900
                                     "
                                 >
-                                    Questions
+                                    {{ $t('Questions')}}
                                 </h3>
                                 <p class="mt-1 text-sm text-gray-500">
-                                    List all your questions
+                                    {{ $t('List all your questions')}}
                                 </p>
                             </div>
                         </div>
@@ -136,7 +190,7 @@
                                 <div>
                                     <div class="flex">
                                         <h1 class="py-2">
-                                            Question {{ index + 1 }}
+                                            {{ $t('Question') }} {{ index + 1 }}
                                         </h1>
                                         <span
                                             class="
@@ -151,7 +205,7 @@
                                                 mx-3
                                             "
                                         >
-                                            {{ question.type }}
+                                            {{ $t(question.type) }}
                                         </span>
                                     </div>
                                     <div class="sm:col-span-4">
@@ -164,7 +218,7 @@
                                                 text-gray-700
                                             "
                                         >
-                                            Question Text
+                                            {{ $t('Question Text')}}
                                         </label>
                                         <div
                                             class="
@@ -198,10 +252,10 @@
                                         "
                                     >
                                         <!--
-  This example requires Tailwind CSS v2.0+ 
-  
+  This example requires Tailwind CSS v2.0+
+
   This example requires some changes to your config:
-  
+
   ```
   // tailwind.config.js
   module.exports = {
@@ -253,7 +307,7 @@
                                                         v-model="
                                                             potentialAnswer.text
                                                         "
-                                                        placeholder="Write your answer"
+                                                        :placeholder="$t('Write your answer')"
                                                         class="
                                                             placeholder-gray-900
                                                             border-none
@@ -266,8 +320,7 @@
                                                         id="comments-description"
                                                         class="text-gray-500"
                                                     >
-                                                        Add a possible answer to
-                                                        your question
+
                                                     </p>
                                                 </div>
                                             </div>
@@ -283,7 +336,7 @@
                                                 addPotentialAnswer(question)
                                             "
                                         >
-                                            Add Potential Answer
+                                            {{ $t("Add Potential Answer")}}
                                         </button>
                                     </div>
                                     <div class="sm:col-span-6 mt-3">
@@ -296,7 +349,7 @@
                                                 text-gray-700
                                             "
                                         >
-                                            Description
+                                            {{ $t('Description')}}
                                         </label>
                                         <div class="mt-1">
                                             <textarea
@@ -352,7 +405,7 @@
                                                     font-medium
                                                     text-gray-900
                                                 "
-                                                >Required?
+                                                >{{ $t("Required?")}}
                                             </span>
                                         </SwitchLabel>
                                     </SwitchGroup>
@@ -387,7 +440,7 @@
                                                         focus-visible:ring-opacity-75
                                                     "
                                                 >
-                                                    <span>Conditions</span>
+                                                    <span>{{ $t('Conditions')}}</span>
                                                     <ChevronUpIcon
                                                         :class="
                                                             open
@@ -576,7 +629,7 @@
                                         md:block
                                     "
                                 >
-                                    add a question
+                                    {{ $t("add a question")}}
                                 </h1>
                                 <div
                                     class="
@@ -770,7 +823,7 @@
                                     focus:ring-indigo-500
                                 "
                             >
-                                Cancel
+                                {{ $t("Cancel")}}
                             </button>
                             <button
                                 type="button"
@@ -795,7 +848,7 @@
                                 "
                                 @click="submitForm"
                             >
-                                Save
+                                {{  $t("Save") }}
                             </button>
                         </div>
                     </div>
@@ -830,6 +883,7 @@ export default defineComponent({
     },
     data() {
         return {
+            formSuccess: false,
             form: useForm({
                 title: "",
                 description: "",
@@ -891,8 +945,7 @@ export default defineComponent({
                 preserveScroll: true,
                 onSuccess: () => {
                     this.form.reset();
-                    alert("worked successfully");
-                    window.location.href = "/dashboard";
+                    this.formSuccess = true;
                 },
             });
         },

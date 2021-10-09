@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -36,8 +37,19 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
+        $locales = [];
+        foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties){
+            $locales[$localeCode] = [
+                'native' => $properties['native'],
+                'url' => LaravelLocalization::getLocalizedURL($localeCode, null, [], true)
+            ];
+        }
         return array_merge(parent::share($request), [
-            //
+            'locale' => [
+                'code' => LaravelLocalization::getCurrentLocale(),
+                'native' => LaravelLocalization::getCurrentLocaleNative()
+            ],
+            'locales' => $locales
         ]);
     }
 }

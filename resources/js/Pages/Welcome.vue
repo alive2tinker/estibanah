@@ -1,9 +1,9 @@
 <template>
   <!--
-  This example requires Tailwind CSS v2.0+ 
-  
+  This example requires Tailwind CSS v2.0+
+
   This example requires some changes to your config:
-  
+
   ```
   // tailwind.config.js
   module.exports = {
@@ -15,14 +15,14 @@
   }
   ```
 -->
-<div class="bg-white">
+<div class="bg-white" dir="rtl">
   <header>
     <div class="relative bg-white">
-      <div class="flex justify-between items-center max-w-7xl mx-auto px-4 py-6 sm:px-6 md:justify-start md:space-x-10 lg:px-8">
+      <div class="flex justify-between items-center max-w-7xl mx-auto px-4 py-6 sm:px-6 md:justify-start md:rtl:justify-end md:space-x-10 lg:px-8">
         <div class="flex justify-start lg:w-0 lg:flex-1">
           <a href="#">
             <span class="sr-only">Workflow</span>
-            <img class="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-purple-600-to-indigo-600.svg" alt="">
+              <img :src="`/images/seu_logo.png`" alt="" class="w-16 h-16">
           </a>
         </div>
         <div class="-mr-2 -my-2 md:hidden">
@@ -59,7 +59,7 @@
                 From: "opacity-100 translate-y-0"
                 To: "opacity-0 translate-y-1"
             -->
-            
+
           </div>
 
           <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
@@ -109,7 +109,7 @@
                 </button>
               </div>
             </div>
-           
+
           </div>
           <div class="py-6 px-5">
             <div class="grid grid-cols-2 gap-4">
@@ -250,7 +250,7 @@
             </div>
           </div>
           <div class="mt-12 sm:mt-16 lg:mt-0">
-            <div class="pl-4 -mr-48 sm:pl-6 md:-mr-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
+            <div class="ltr:pl-4 rtl:pr-4 ltr:-mr-48 rtl:mr-48 ltr:sm:pl-6 md:rtl:-mr-16 md:rtl:-ml-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
               <img class="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none" src="http://estibanah.test/dashboard-analytics.png" alt="Inbox user interface">
             </div>
           </div>

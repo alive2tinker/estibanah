@@ -25,29 +25,35 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard',[
-        'forms' => FormResource::collection(Auth::user()->forms()->orderby('created_at','desc')->paginate(10)),
-        'responses' => count(FormResponse::all()),
-        'users' => count(User::all())
-    ]);
-})->name('dashboard');
-
-
-Route::middleware(['auth:sanctum','verified'])->resource('forms', FormController::class);
-Route::middleware(['auth:sanctum','verified'])->resource('questions', QuestionController::class);
-Route::get('/forms/{form}/answer', [FormResponseController::class, 'create'])->name('forms.answer');
-Route::post('/formResponses/{form}', [FormResponseController::class, 'store'])->name('formResponses.store');
-
 Route::post('/invitations', InvitationController::class)->name('invitations');
 
 Route::get('/export-results/{form}', ResultsExportController::class)->name('results.export');
+
+Route::get('/localeChange/{locale}', \App\Http\Controllers\LocaleController::class)->name('localeChange');
+
+Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+{
+    /** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
+    Route::get('/', function () {
+        return Inertia::render('Welcome', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+        ]);
+    });
+
+    Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+        return Inertia::render('Dashboard',[
+            'forms' => FormResource::collection(Auth::user()->role === 'admin' ? \App\Models\Form::orderby('created_at','desc')->paginate(10) : Auth::user()->forms()->orderby('created_at','desc')->paginate(10)),
+            'responses' => count(Auth::user()->role === 'admin' ? FormResponse::all() : Auth::user()->forms()->whereHas('formResponses')->get()),
+            'users' => count(User::all())
+        ]);
+    })->name('dashboard');
+
+
+    Route::middleware(['auth:sanctum','verified'])->resource('forms', FormController::class);
+    Route::middleware(['auth:sanctum','verified'])->resource('questions', QuestionController::class);
+    Route::get('/forms/{form}/answer', [FormResponseController::class, 'create'])->name('forms.answer');
+    Route::post('/formResponses/{form}', [FormResponseController::class, 'store'])->name('formResponses.store');
+});
