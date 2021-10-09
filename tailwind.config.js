@@ -18,5 +18,11 @@ module.exports = {
         },
     },
 
-    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+    variants: {
+        float: ['responsive', 'direction'],
+        margin: ['responsive', 'direction'],
+        padding: ['responsive', 'direction'],
+    },
+
+    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'), require('tailwindcss-dir'),require('tailwindcss-rtl')],
 };

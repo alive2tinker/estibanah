@@ -500,16 +500,16 @@
                                     aria-hidden="true"
                                     :class="[
                                         form.published
-                                            ? 'translate-x-5'
-                                            : 'translate-x-0',
-                                        'pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200',
+                                            ? 'ltr:translate-x-5 rtl:-translate-x-5'
+                                            : 'ltr:translate-x-0 rtl:-translate-x-0',
+                                        'pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200 ',
                                     ]"
                                 />
                             </Switch>
                             <SwitchLabel as="span" class="ml-3">
                                 <span
                                     :class="{
-                                        'inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium': true,
+                                        'inline-flex items-center mx-2.5 px-2.5 py-0.5 rounded-md text-sm font-medium': true,
                                         'bg-green-100 text-green-800':
                                             form.published,
                                         'bg-red-100 text-red-800':
@@ -527,11 +527,13 @@
                                     >
                                         <circle cx="4" cy="4" r="3" />
                                     </svg>
-                                    {{
-                                        form.published
-                                            ? "Published"
-                                            : "Not Published"
-                                    }}
+                                    <p class="rtl:mr-4">
+                                        {{
+                                            form.published
+                                                ? $t("Published")
+                                                : $t("Not Published")
+                                        }}
+                                    </p>
                                 </span>
                             </SwitchLabel>
                         </SwitchGroup>
@@ -570,7 +572,7 @@
                                     focus:ring-indigo-500
                                     focus:border-indigo-500
                                 "
-                                
+
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -689,7 +691,7 @@
                                     focus:ring-indigo-500
                                     focus:border-indigo-500
                                 "
-                                
+
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -715,7 +717,7 @@
                 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                     <div class="px-4 py-5 sm:px-6">
                         <h3 class="text-lg leading-6 font-medium text-gray-900">
-                            Form Description
+                            {{ $t("Form Description")}}
                         </h3>
                         <p class="mt-1 max-w-2xl text-sm text-gray-500">
                             {{ userForm.data.description }}
@@ -723,16 +725,16 @@
                     </div>
                     <div class="px-4 py-5 sm:px-6">
                         <h3 class="text-lg leading-6 font-medium text-gray-900">
-                            Questions
+                            {{ $t("Questions")}}
                         </h3>
                     </div>
                     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
                         <dl class="sm:divide-y sm:divide-gray-200">
                             <!--
-  This example requires Tailwind CSS v2.0+ 
-  
+  This example requires Tailwind CSS v2.0+
+
   This example requires some changes to your config:
-  
+
   ```
   // tailwind.config.js
   module.exports = {
