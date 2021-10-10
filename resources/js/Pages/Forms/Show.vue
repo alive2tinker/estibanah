@@ -109,14 +109,11 @@
                                     "
                                     id="modal-title"
                                 >
-                                    Delete {{ userForm.data.title }}
+                                    {{ $t('Delete') }} {{ userForm.data.title }}
                                 </h3>
                                 <div class="mt-2">
                                     <p class="text-sm text-gray-500">
-                                        Are you sure you want to deactivate your
-                                        account? All of your data will be
-                                        permanently removed. This action cannot
-                                        be undone.
+                                        {{ $t("Are you sure you want to delete this form? this action cannot be undone")}}
                                     </p>
                                 </div>
                             </div>
@@ -154,7 +151,7 @@
                                 sm:ml-3 sm:w-auto sm:text-sm
                             "
                         >
-                            Delete
+                            {{ $t('Delete')}}
                         </button>
                         <button
                             @click="deleteModalOpen = false"
@@ -181,7 +178,7 @@
                                 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm
                             "
                         >
-                            Cancel
+                            {{ $t('Cancel')}}
                         </button>
                     </div>
                 </div>
@@ -302,7 +299,7 @@
                                 "
                                 id="modal-title"
                             >
-                                Share your estibanah
+                                {{ $t('Share your estibanah')}}
                             </h3>
                             <div class="mt-2">
                                 <div>
@@ -314,7 +311,7 @@
                                             font-medium
                                             text-gray-700
                                         "
-                                        >Link</label
+                                        >{{ $t('Link')}}</label
                                     >
                                     <div class="mt-1">
                                         <div class="grid grid-cols-6 gap-0.5">
@@ -371,15 +368,14 @@
                                             font-medium
                                             text-gray-700
                                         "
-                                        >Send Invitation to email
-                                        addresses</label
+                                        >{{ $t('Send Invitation to email addresses')}}</label
                                     >
                                     <!-- This example requires Tailwind CSS v2.0+ -->
                                     <span
                                         :class="{'inline-flex my-4 items-center px-2.5 py-0.5 rounded-full text-xs font-medium': true, 'bg-green-100 text-green-800': validEmailList, 'bg-red-100 text-red-800': !validEmailList}
                                         "
                                     >
-                                        {{ validEmailList ? 'Good Syntax' : 'Bad Syntax'}}
+                                        {{ validEmailList ? $t('Good Syntax') : $t('Bad Syntax')}}
                                     </span>
                                     <textarea
                                         v-model="invitationForm.emailList"
@@ -437,7 +433,7 @@
                             :disabled="!validEmailList"
                             @click="sendInvitations()"
                         >
-                            Invite
+                            {{ $t('Invite')}}
                         </button>
                         <button
                             type="button"
@@ -464,7 +460,7 @@
                             "
                             @click="shareModalOpen = false"
                         >
-                            Cancel
+                            {{ $t('Cancel')}}
                         </button>
                     </div>
                 </div>
@@ -801,7 +797,7 @@
                                                         text-gray-800
                                                     "
                                                 >
-                                                    {{ question.type }}
+                                                    {{ $t(question.type) }}
                                                 </span>
                                             </a>
                                         </div>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :dir="$page.props.locale.code === 'ar' ? 'rtl' : 'ltr'">
         <Head :title="title" />
 
         <jet-banner />

@@ -35,11 +35,10 @@
                                         text-gray-900
                                     "
                                 >
-                                    Form information
+                                    {{ $t('Form information') }}
                                 </h3>
                                 <p class="mt-1 text-sm text-gray-500">
-                                    lets start by the title and description of
-                                    the form
+                                    {{ $t('lets start by the title and description of the form') }}
                                 </p>
                             </div>
 
@@ -61,7 +60,7 @@
                                             text-gray-700
                                         "
                                     >
-                                        Title
+                                        {{ $t('Title') }}
                                     </label>
                                     <div class="mt-1 flex rounded-md shadow-sm">
                                         <input
@@ -86,7 +85,7 @@
                                             text-gray-700
                                         "
                                     >
-                                        Description
+                                        {{ $t('Description') }}
                                     </label>
                                     <div class="mt-1">
                                         <textarea
@@ -101,8 +100,7 @@
                                         ></textarea>
                                     </div>
                                     <p class="mt-2 text-sm text-gray-500">
-                                        Write a few sentences that explains the
-                                        purpose of the form.
+                                        {{ $t('Write a few sentences that explains the purpose of the form.') }}
                                     </p>
                                 </div>
                             </div>
@@ -118,10 +116,10 @@
                                         text-gray-900
                                     "
                                 >
-                                    Questions
+                                    {{ $t('Questions') }}
                                 </h3>
                                 <p class="mt-1 text-sm text-gray-500">
-                                    List all your questions
+                                    {{ $t('List all your questions') }}
                                 </p>
                             </div>
                         </div>
@@ -136,7 +134,7 @@
                                 <div>
                                     <div class="flex">
                                         <h1 class="py-2">
-                                            Question {{ index + 1 }}
+                                            {{ $t('Question')}} {{ index + 1 }}
                                         </h1>
                                         <span
                                             class="
@@ -151,7 +149,7 @@
                                                 mx-3
                                             "
                                         >
-                                            {{ question.type }}
+                                            {{ $t(question.type) }}
                                         </span>
                                     </div>
                                     <div class="sm:col-span-4">
@@ -164,7 +162,7 @@
                                                 text-gray-700
                                             "
                                         >
-                                            Question Text
+                                            {{ $t('Question Text') }}
                                         </label>
                                         <div
                                             class="
@@ -198,10 +196,10 @@
                                         "
                                     >
                                         <!--
-  This example requires Tailwind CSS v2.0+ 
-  
+  This example requires Tailwind CSS v2.0+
+
   This example requires some changes to your config:
-  
+
   ```
   // tailwind.config.js
   module.exports = {
@@ -266,8 +264,8 @@
                                                         id="comments-description"
                                                         class="text-gray-500"
                                                     >
-                                                        Add a possible answer to
-                                                        your question
+                                                        {{ $t('Add a possible answer to your question') }}
+
                                                     </p>
                                                 </div>
                                             </div>
@@ -283,7 +281,7 @@
                                                 addPotentialAnswer(question)
                                             "
                                         >
-                                            Add Potential Answer
+                                            {{ $t('Add Potential Answer') }}
                                         </button>
                                     </div>
                                     <div class="sm:col-span-6 mt-3">
@@ -296,7 +294,7 @@
                                                 text-gray-700
                                             "
                                         >
-                                            Description
+                                            {{ $t('Description') }}
                                         </label>
                                         <div class="mt-1">
                                             <textarea
@@ -324,10 +322,7 @@
                                         class="flex items-center"
                                     >
                                         <Switch
-                                            @click="
-                                                questionIsRequired(question)
-                                            "
-                                            v-model="question.required"
+                                            @click="question.required = !question.required"
                                             :class="[
                                                 question.required
                                                     ? 'bg-indigo-600'
@@ -352,7 +347,7 @@
                                                     font-medium
                                                     text-gray-900
                                                 "
-                                                >Required?
+                                            >{{ $t('Required?')}}
                                             </span>
                                         </SwitchLabel>
                                     </SwitchGroup>
@@ -387,7 +382,7 @@
                                                         focus-visible:ring-opacity-75
                                                     "
                                                 >
-                                                    <span>Conditions</span>
+                                                    <span>{{ $t('Conditions') }}</span>
                                                     <ChevronUpIcon
                                                         :class="
                                                             open
@@ -411,33 +406,34 @@
                                                 >
                                                     <div v-if="question.conditions.length > 0">
                                                         <div
-                                                        class="
+                                                            class="
                                                             mt-6
                                                             grid grid-cols-1
                                                             gap-y-6 gap-x-4
                                                             sm:grid-cols-6
                                                         "
-                                                        v-for="(condition, index) in question.conditions" :key="index"
-                                                    >
+                                                            v-for="(condition, index) in question.conditions"
+                                                            :key="index"
+                                                        >
 
-                                                        <div
-                                                            class="
+                                                            <div
+                                                                class="
                                                                 sm:col-span-2
                                                             "
-                                                        >
-                                                            <label
-                                                                for="city"
-                                                                class="
+                                                            >
+                                                                <label
+                                                                    for="city"
+                                                                    class="
                                                                     block
                                                                     text-sm
                                                                     font-medium
                                                                     text-gray-700
                                                                 "
-                                                            >
-                                                                Prior Question
-                                                            </label>
-                                                            <div class="mt-1">
-                                                                <select v-model="condition.foreignQuestion" class="shadow-sm
+                                                                >
+                                                                    {{ $t('Prior Question') }}
+                                                                </label>
+                                                                <div class="mt-1">
+                                                                    <select class="shadow-sm
                                                                         focus:ring-indigo-500
                                                                         focus:border-indigo-500
                                                                         block
@@ -445,30 +441,34 @@
                                                                         sm:text-sm
                                                                         border-gray-300
                                                                         rounded-md">
-                                                                    <option value="">Choose</option>
-                                                                    <option v-for="(question, index) in priorQuestionsTo(question)" :key="index" :value="question.text">{{question.text}}</option>
-                                                                </select>
+                                                                        <option value="">{{ $t('Choose') }}</option>
+                                                                        <option
+                                                                            v-for="(question, index) in priorQuestionsTo(question)"
+                                                                            :key="index" :selected="question.text === condition.foreignQuestion.text" :value="question.text">
+                                                                            {{ question.text }}
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
-                                                        </div>
 
-                                                        <div
-                                                            class="
+                                                            <div
+                                                                class="
                                                                 sm:col-span-2
                                                             "
-                                                        >
-                                                            <label
-                                                                for="state"
-                                                                class="
+                                                            >
+                                                                <label
+                                                                    for="state"
+                                                                    class="
                                                                     block
                                                                     text-sm
                                                                     font-medium
                                                                     text-gray-700
                                                                 "
-                                                            >
-                                                                Operation
-                                                            </label>
-                                                            <div class="mt-1">
-                                                                <select v-model="condition.operation" class="shadow-sm
+                                                                >
+                                                                    {{ $t('Operation') }}
+                                                                </label>
+                                                                <div class="mt-1">
+                                                                    <select v-model="condition.operation" class="shadow-sm
                                                                         focus:ring-indigo-500
                                                                         focus:border-indigo-500
                                                                         block
@@ -476,33 +476,39 @@
                                                                         sm:text-sm
                                                                         border-gray-300
                                                                         rounded-md">
-                                                                    <option value="">Choose</option>
-                                                                    <option value="notEmpty">Question not empty</option>
-                                                                    <option value="equals">Question response equals to</option>
-                                                                    <option value="notEquals">Question response not equals to</option>
-                                                                </select>
+                                                                        <option value="">{{ $t('Choose') }}</option>
+                                                                        <option value="notEmpty">
+                                                                            {{ $t('Question not empty') }}
+                                                                        </option>
+                                                                        <option value="equals">
+                                                                            {{ $t('Question response equals to') }}
+                                                                        </option>
+                                                                        <option value="notEquals">
+                                                                            {{ $t('Question response not equals to') }}
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
-                                                        </div>
 
-                                                        <div
-                                                        v-if="index > 0"
-                                                            class="
+                                                            <div
+                                                                v-if="index > 0"
+                                                                class="
                                                                 sm:col-span-2
                                                             "
-                                                        >
-                                                            <label
-                                                                for="zip"
-                                                                class="
+                                                            >
+                                                                <label
+                                                                    for="zip"
+                                                                    class="
                                                                     block
                                                                     text-sm
                                                                     font-medium
                                                                     text-gray-700
                                                                 "
-                                                            >
-                                                                Operator
-                                                            </label>
-                                                            <div class="mt-1">
-                                                                <select v-model="condition.operator" class="shadow-sm
+                                                                >
+                                                                    {{ $t('Operator') }}
+                                                                </label>
+                                                                <div class="mt-1">
+                                                                    <select v-model="condition.operator" class="shadow-sm
                                                                         focus:ring-indigo-500
                                                                         focus:border-indigo-500
                                                                         block
@@ -510,52 +516,61 @@
                                                                         sm:text-sm
                                                                         border-gray-300
                                                                         rounded-md">
-                                                                        <option value="">Choose</option>
-                                                                        <option value="&&">AND</option>
-                                                                        <option value="||">OR</option>
-                                                                        </select>
+                                                                        <option value="">{{ $t('Choose') }}</option>
+                                                                        <option value="&&">{{ $t('AND') }}</option>
+                                                                        <option value="||">{{ $t('OR') }}</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div
-                                                        v-if="condition.operation != 'notEmpty'"
-                                                            class="
+                                                            <div
+                                                                v-if="condition.operation != 'notEmpty'"
+                                                                class="
                                                                 sm:col-span-2
                                                             "
-                                                        >
-                                                            <label
-                                                                for="zip"
-                                                                class="
+                                                            >
+                                                                <label
+                                                                    for="zip"
+                                                                    class="
                                                                     block
                                                                     text-sm
                                                                     font-medium
                                                                     text-gray-700
                                                                 "
-                                                            >
-                                                                Value
-                                                            </label>
-                                                            <div class="mt-1">
-                                                                <input type="text" v-model="condition.value" class="shadow-sm
+                                                                >
+                                                                    {{ $t('Value') }}
+                                                                </label>
+                                                                <div class="mt-1">
+                                                                    <input type="text" v-model="condition.value" class="shadow-sm
                                                                         focus:ring-indigo-500
                                                                         focus:border-indigo-500
                                                                         block
                                                                         w-full
                                                                         sm:text-sm
                                                                         border-gray-300
-                                                                        rounded-md" />
+                                                                        rounded-md"/>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <button type="button" class="sm:col-span-6 my-4 text-indigo-500" @click="addCondition(question)">Add Condition</button>
+                                                        <button type="button" class="sm:col-span-6 my-4 text-indigo-500"
+                                                                @click="addCondition(question)">{{
+                                                                $t('Add Condition')
+                                                            }}
+                                                        </button>
                                                     </div>
                                                     <!-- This example requires Tailwind CSS v2.0+ -->
-<button v-else @click="addCondition(question)" type="button" class="relative block w-full border-2 border-gray-300 border-dashed rounded-lg p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-  <svg class="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6" />
-  </svg>
-  <span class="mt-2 block text-sm font-medium text-gray-900">
-    Create a new database
+                                                    <button v-else @click="addCondition(question)" type="button"
+                                                            class="relative block w-full border-2 border-gray-300 border-dashed rounded-lg p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                        <svg class="mx-auto h-12 w-12 text-gray-400"
+                                                             xmlns="http://www.w3.org/2000/svg" stroke="currentColor"
+                                                             fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                  stroke-width="2"
+                                                                  d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6"/>
+                                                        </svg>
+                                                        <span class="mt-2 block text-sm font-medium text-gray-900">
+{{ $t('Create a new database') }}
   </span>
-</button>
+                                                    </button>
                                                 </DisclosurePanel>
                                             </Disclosure>
                                         </div>
@@ -576,7 +591,7 @@
                                         md:block
                                     "
                                 >
-                                    add a question
+                                    {{ $t('add a question') }}
                                 </h1>
                                 <div
                                     class="
@@ -770,7 +785,7 @@
                                     focus:ring-indigo-500
                                 "
                             >
-                                Cancel
+                                {{ $t('Cancel') }}
                             </button>
                             <button
                                 type="button"
@@ -795,7 +810,7 @@
                                 "
                                 @click="submitForm"
                             >
-                                Save
+                                {{ $t('Save') }}
                             </button>
                         </div>
                     </div>
@@ -806,12 +821,11 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { useForm } from "@inertiajs/inertia-vue3";
-import { Switch, SwitchGroup, SwitchLabel } from "@headlessui/vue";
-import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/vue";
-import { ChevronUpIcon } from "@heroicons/vue/solid";
+import {useForm} from "@inertiajs/inertia-vue3";
+import {Disclosure, DisclosureButton, DisclosurePanel, Switch, SwitchGroup, SwitchLabel} from "@headlessui/vue";
+import {ChevronUpIcon} from "@heroicons/vue/solid";
 
 export default defineComponent({
     props: {
@@ -849,12 +863,12 @@ export default defineComponent({
                 hasConditions: false,
                 answers:
                     qType === "multiple" || qType === "checkbox"
-                        ? [{ text: "", description: "" }]
+                        ? [{text: "", description: ""}]
                         : null,
             });
         },
         addPotentialAnswer: function (question) {
-            question.answers.push({ text: "", description: "" });
+            question.answers.push({text: "", description: ""});
         },
         questionIsRequired: function (question) {
             question.required = !question.required;
@@ -874,7 +888,6 @@ export default defineComponent({
                 priorQuestions.push(q);
                 return this.form.questions[index + 1].text === question.text;
             });
-
             return priorQuestions;
         },
         submitForm: function () {
