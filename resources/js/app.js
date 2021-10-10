@@ -8,7 +8,7 @@ import arLocale from '../lang/ar.json'
 
 const i18n = createI18n({
     legacy: false,
-    locale: document.querySelector('meta[name="locale"]').content,
+    locale: 'ar',
     globalInjection: true,
     messages: {
         ar: arLocale,

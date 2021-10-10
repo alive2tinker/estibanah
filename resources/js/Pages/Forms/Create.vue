@@ -377,10 +377,7 @@
                                         class="flex items-center"
                                     >
                                         <Switch
-                                            @click="
-                                                questionIsRequired(question)
-                                            "
-                                            v-model="question.required"
+                                            @click="question.required = !question.required"
                                             :class="[
                                                 question.required
                                                     ? 'bg-indigo-600'
@@ -946,6 +943,9 @@ export default defineComponent({
                 onSuccess: () => {
                     this.form.reset();
                     this.formSuccess = true;
+                    setTimeout(() => {
+                        window.location.href = "/dashboard";
+                    }, 2500)
                 },
             });
         },

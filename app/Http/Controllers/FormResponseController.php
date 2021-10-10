@@ -33,7 +33,7 @@ class FormResponseController extends Controller
     {
         if(!$form->published)
             return abort(403);
-            
+
         return Inertia::render('FormResponses/Create', [
             'form' => new FormDetailResource($form)
         ]);

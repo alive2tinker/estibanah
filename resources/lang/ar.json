@@ -36,5 +36,20 @@
     "Save": "حفظ",
     "Cancel": "الغاء",
     "form submitted successfully": "تم حفظ الاستبيان بنجاح",
-    "Just a second before we redirect you to detailed page": "سيتم تحويلك لصفحة العرض خلال ثواني"
+    "Just a second before we redirect you to detailed page": "سيتم تحويلك لصفحة العرض خلال ثواني",
+    "you can close this page now": "تستطيع اغلاف هذه الصفحة الان",
+    "Log Out": "تسجيل الخروج",
+    "Manage Account": "ادارة الحساب",
+    "Are you sure you want to delete this form? this action cannot be undone": "هل انت متاكد من حذفك لهذا الاستبيان؟ لايمكنك التراجع بعد ذلك",
+    "Delete": "حذف",
+    "Share your estibanah": "شارك استبيانك",
+    "Good Syntax": "صياغة جيدة",
+    "Bad Syntax": "صياغة غير جيدة",
+    "Send Invitation to email addresses": "ارسل دعوة مشاركة بالايميل",
+    "Invite": "إرسال الدعوة",
+    "Link": "الرابط",
+    "Prior Question": "السؤال السابق",
+    "Operation": "العملية",
+    "Operator": "مع/بدون",
+    "Value": "القيمة"
 }

@@ -5,12 +5,62 @@
                 {{ form.data.title }}
             </h2>
         </template>
+        <!-- This example requires Tailwind CSS v2.0+ -->
+        <div v-if="formSuccess" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <!--
+                  Background overlay, show/hide based on modal state.
+
+                  Entering: "ease-out duration-300"
+                    From: "opacity-0"
+                    To: "opacity-100"
+                  Leaving: "ease-in duration-200"
+                    From: "opacity-100"
+                    To: "opacity-0"
+                -->
+                <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+                <!-- This element is to trick the browser into centering the modal contents. -->
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+                <!--
+                  Modal panel, show/hide based on modal state.
+
+                  Entering: "ease-out duration-300"
+                    From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    To: "opacity-100 translate-y-0 sm:scale-100"
+                  Leaving: "ease-in duration-200"
+                    From: "opacity-100 translate-y-0 sm:scale-100"
+                    To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                -->
+                <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+                    <div>
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                            <!-- Heroicon name: outline/check -->
+                            <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-5">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                {{ $t('form submitted successfully') }}
+                            </h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500">
+                                    {{ $t('you can close this page now') }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="max-w-7xl mx-auto sm:px-8 my-5 lg:px-4">
             <!-- This example requires Tailwind CSS v2.0+ -->
             <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:px-6">
                     <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        Form Description
+                        {{ $t('Description')}}
                     </h3>
                     <p class="mt-1 max-w-2xl text-sm text-gray-500">
                         {{ form.data.description }}
@@ -26,10 +76,10 @@
                         >
                             <div>
                                 <!--
-  This example requires Tailwind CSS v2.0+ 
-  
+  This example requires Tailwind CSS v2.0+
+
   This example requires some changes to your config:
-  
+
   ```
   // tailwind.config.js
   module.exports = {
@@ -220,7 +270,7 @@
                                     </fieldset>
                                 </div>
                                 <div v-if="response.question.type === 'file'">
-                                    <div class="sm:col-span-6">
+                                    <div class="sm:col-span-6" >
                                         <label
                                             for="cover-photo"
                                             class="
@@ -246,7 +296,7 @@
                                                 rounded-md
                                             "
                                         >
-                                            <div class="space-y-1 text-center">
+                                            <div class="space-y-1 text-center" >
                                                 <svg
                                                     class="
                                                         mx-auto
@@ -312,6 +362,24 @@
                                                 </p>
                                             </div>
                                         </div>
+                                        <div v-if="response.value.length > 0">
+                                            <!-- This example requires Tailwind CSS v2.0+ -->
+                                            <div class="rounded-md bg-green-50 p-4">
+                                                <div class="flex">
+                                                    <div class="flex-shrink-0">
+                                                        <!-- Heroicon name: solid/check-circle -->
+                                                        <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                        </svg>
+                                                    </div>
+                                                    <div class="ml-3">
+                                                        <h3 class="text-sm font-medium text-green-800">
+                                                            File Uploaded
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div v-if="response.question.type === 'date'">
@@ -362,7 +430,7 @@
                                 focus:ring-indigo-500
                             "
                         >
-                            Cancel
+                            {{ $t('Cancel')}}
                         </button>
                         <button
                             @click="submitForm"
@@ -387,7 +455,7 @@
                                 focus:ring-indigo-500
                             "
                         >
-                            Save
+                            {{ $t('Save')}}
                         </button>
                     </div>
                 </div>
@@ -411,6 +479,7 @@ export default defineComponent({
     },
     data(){
         return{
+            formSuccess: false,
             responseForm: useForm({
                 responses: []
             })
@@ -429,13 +498,11 @@ export default defineComponent({
                 preserveScroll: true,
                 forceFormData: true,
                 onSuccess: () => {
-                    alert("submission was succesful")
-                    window.location.href= route('forms.show', this.form.data.id);
+                    this.formSuccess = true;
                 }
             })
         },
         shouldBeShown: function(statement) {
-            console.log(statement);
             if(statement === 'true')
                 return true;
             else
@@ -449,18 +516,21 @@ export default defineComponent({
         equals: function(questionID, value)
         {
             var response = this.responseForm.responses.find((s) => s.question.id == questionID);
-            return response.question.type === 'checkbox' ? response.value.length > 0
-                : response.value === value;
+            if(response.question.type === 'checkbox' || response.question.type === 'multiple'){
+                return response.value.length > 0 && response.value.includes(value)
+            }else{
+                return response.value === value && response.value !== '';
+            }
         },
         notEquals: function(questionID, value)
         {
-            console.log(`this is the question id: ${questionID}, and this is the value: ${value}`)
-            // var response = this.responseForm.responses.find((s) => s.question.id == questionID);
-            // console.log(`this is the response ${response}`)
-            // return response.question.type === 'checkbox' ? response.value.length > 0
-            //     : response.value !== value;
-            return true;
-        }
+            var response = this.responseForm.responses.find((s) => s.question.id == questionID);
+            if(response.question.type === 'checkbox' || response.question.type === 'multiple'){
+                return response.value.length > 0 && !response.value.includes(value)
+            }else{
+                return response.value !== value && response.value !== '';
+            }
+        },
     }
 });
 </script>

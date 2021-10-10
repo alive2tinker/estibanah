@@ -16,8 +16,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::create([
             'name' => "Abdulmalik Alsufayran",
             'email' => "admin@estibanah.com",
-            'password' => bcrypt('YWRtaW4=')
-        ])
+            'password' => bcrypt('YWRtaW4='),
+            'role' => "admin"
+        ]);
         $this->call(FormSeeder::class);
     }
 }

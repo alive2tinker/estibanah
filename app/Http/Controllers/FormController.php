@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreForm;
 use App\Http\Resources\FormDetailResource;
-use App\Http\Resources\FormResource;
 use App\Models\Answer;
+use App\Models\Condition;
 use App\Models\Form;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use App\Models\Condition;
 
 class FormController extends Controller
 {
@@ -38,7 +37,7 @@ class FormController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreForm $request)
@@ -83,7 +82,7 @@ class FormController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Form  $form
+     * @param \App\Models\Form $form
      * @return \Illuminate\Http\Response
      */
     public function show(Form $form)
@@ -96,7 +95,7 @@ class FormController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Form  $form
+     * @param \App\Models\Form $form
      * @return \Illuminate\Http\Response
      */
     public function edit(Form $form)
@@ -109,8 +108,8 @@ class FormController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Form  $form
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Form $form
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Form $form)
@@ -123,7 +122,7 @@ class FormController extends Controller
                 'description' => $request->input('description')
             ]);
 
-            foreach ($request->input('questions') as $oldQuestion) {
+            foreach ($request->input('questions') as $index => $oldQuestion) {
                 try {
                     $question = Question::find($oldQuestion['id']);
                     $question->update([
@@ -156,17 +155,19 @@ class FormController extends Controller
                     }
                 }
 
-                foreach ($oldQuestion['conditions'] as $condition) {
-                    Condition::updateOrCreate(['operation',
-                    'value',
-                    'foreign_question',
-                    'operator',
-                    'question_id'],[
+                foreach ($oldQuestion['conditions'] as $index => $condition) {
+                    Condition::updateOrCreate([
                         'operation' => $condition['operation'],
                         'value' => $condition['value'],
-                        'foreign_question' => Question::where('text', $condition['foreignQuestion'])->first()->id,
                         'operator' => $condition['operator'],
-                        'question_id' => $question->id
+                        'question_id' => $question->id,
+                        'foreign_question' => Question::where('text', $condition['foreignQuestion']['text'])->first()->id,
+                    ], [
+                        'operation' => $condition['operation'],
+                        'value' => $condition['value'],
+                        'operator' => $condition['operator'],
+                        'question_id' => $question->id,
+                        'foreign_question' => Question::where('text', $condition['foreignQuestion']['text'])->first()->id,
                     ]);
                 }
             }
@@ -178,7 +179,7 @@ class FormController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Form  $form
+     * @param \App\Models\Form $form
      * @return \Illuminate\Http\Response
      */
     public function destroy(Form $form)

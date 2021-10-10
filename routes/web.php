@@ -41,7 +41,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
             'laravelVersion' => Application::VERSION,
             'phpVersion' => PHP_VERSION,
         ]);
-    });
+    })->name('index');
 
     Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
         return Inertia::render('Dashboard',[
@@ -51,6 +51,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         ]);
     })->name('dashboard');
 
+    Route::get('/download/{filename}', function($filename){
+        return \Illuminate\Support\Facades\Storage::download(\App\Models\Upload::where('name', $filename)->first()->link);
+    })->name('download');
 
     Route::middleware(['auth:sanctum','verified'])->resource('forms', FormController::class);
     Route::middleware(['auth:sanctum','verified'])->resource('questions', QuestionController::class);
