@@ -15,438 +15,442 @@
   ```
 -->
 <template>
-    <div class="bg-white" dir="rtl">
-        <header>
-            <Popover class="relative bg-white">
-                <div class="flex justify-between items-center max-w-7xl mx-auto px-4 py-6 sm:px-6 md:justify-start md:space-x-10 lg:px-8">
-                    <div class="flex justify-start lg:w-0 lg:flex-1">
-                        <Link :href="route('index')">
-                            <span class="sr-only">Workflow</span>
-                            <img :src="`/images/seu_logo.png`" class="w-16 h-16" alt="">
-                        </Link>
-                    </div>
-                    <div class="-mr-2 -my-2 md:hidden">
-                        <PopoverButton class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                            <span class="sr-only">Open menu</span>
-                            <MenuIcon class="h-6 w-6" aria-hidden="true" />
-                        </PopoverButton>
-                    </div>
-                    <PopoverGroup as="nav" class="hidden md:flex space-x-10">
-                        <Popover class="relative" v-slot="{ open }">
-                            <PopoverButton :class="[open ? 'text-gray-900' : 'text-gray-500', 'group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500']">
-                                <span>Solutions</span>
-                                <ChevronDownIcon :class="[open ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500']" aria-hidden="true" />
-                            </PopoverButton>
-
-                            <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
-                                <PopoverPanel class="absolute z-10 -ml-4 mt-3 transform w-screen max-w-md lg:max-w-2xl lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
-                                    <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
-                                        <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
-                                            <a v-for="item in solutions" :key="item.name" :href="item.href" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
-                                                <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white sm:h-12 sm:w-12">
-                                                    <component :is="item.icon" class="h-6 w-6" aria-hidden="true" />
-                                                </div>
-                                                <div class="ml-4">
-                                                    <p class="text-base font-medium text-gray-900">
-                                                        {{ item.name }}
-                                                    </p>
-                                                    <p class="mt-1 text-sm text-gray-500">
-                                                        {{ item.description }}
-                                                    </p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </PopoverPanel>
-                            </transition>
-                        </Popover>
-
-                        <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
-                            Pricing
-                        </a>
-                        <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
-                            Partners
-                        </a>
-                        <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900">
-                            Company
-                        </a>
-                    </PopoverGroup>
-                    <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-                        <Link :href="route('login')" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">Sign in</Link>
-                        <Link :href="route('register')" class="ml-8 whitespace-nowrap inline-flex items-center justify-center bg-gradient-to-r from-purple-600 to-indigo-600 bg-origin-border px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:from-purple-700 hover:to-indigo-700">
-                            Sign up
-                        </Link>
-                    </div>
-                </div>
-
-                <transition enter-active-class="duration-200 ease-out" enter-from-class="opacity-0 scale-95" enter-to-class="opacity-100 scale-100" leave-active-class="duration-100 ease-in" leave-from-class="opacity-100 scale-100" leave-to-class="opacity-0 scale-95">
-                    <PopoverPanel focus class="absolute z-30 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
-                        <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
-                            <div class="pt-5 pb-6 px-5">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-purple-600-to-indigo-600.svg" alt="Workflow" />
-                                    </div>
-                                    <div class="-mr-2">
-                                        <PopoverButton class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                                            <span class="sr-only">Close menu</span>
-                                            <XIcon class="h-6 w-6" aria-hidden="true" />
-                                        </PopoverButton>
-                                    </div>
-                                </div>
-                                <div class="mt-6">
-                                    <nav class="grid grid-cols-1 gap-7">
-                                        <a v-for="item in solutions" :key="item.name" :href="item.href" class="-m-3 p-3 flex items-center rounded-lg hover:bg-gray-50">
-                                            <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
-                                                <component :is="item.icon" class="h-6 w-6" aria-hidden="true" />
-                                            </div>
-                                            <div class="ml-4 text-base font-medium text-gray-900">
-                                                {{ item.name }}
-                                            </div>
-                                        </a>
-                                    </nav>
-                                </div>
-                            </div>
-                            <div class="py-6 px-5">
-                                <div class="grid grid-cols-2 gap-4">
-                                    <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700">
-                                        Pricing
-                                    </a>
-                                    <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700">
-                                        Partners
-                                    </a>
-                                    <a href="#" class="text-base font-medium text-gray-900 hover:text-gray-700">
-                                        Company
-                                    </a>
-                                </div>
-                                <div class="mt-6">
-                                    <a href="#" class="w-full flex items-center justify-center bg-gradient-to-r from-purple-600 to-indigo-600 bg-origin-border px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white hover:from-purple-700 hover:to-indigo-700">
-                                        Sign up
-                                    </a>
-                                    <p class="mt-6 text-center text-base font-medium text-gray-500">
-                                        Existing customer?
-                                        <a href="#" class="text-gray-900">
-                                            Sign in
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </PopoverPanel>
-                </transition>
-            </Popover>
-        </header>
-
-        <main>
-            <!-- Hero section -->
-            <div class="relative">
-                <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100" />
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div class="relative shadow-xl sm:rounded-2xl sm:overflow-hidden">
-                        <div class="absolute inset-0">
-                            <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2830&q=80&sat=-100" alt="People working on laptops" />
-                            <div class="absolute inset-0 bg-gradient-to-r from-purple-800 to-indigo-700 mix-blend-multiply" />
-                        </div>
-                        <div class="relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8">
-                            <h1 class="text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
-                                <span class="block text-white">Take control of your</span>
-                                <span class="block text-indigo-200">customer support</span>
-                            </h1>
-                            <p class="mt-6 max-w-lg mx-auto text-center text-xl text-indigo-200 sm:max-w-3xl">
-                                Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.
-                            </p>
-                            <div class="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
-                                <div class="space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5">
-                                    <a href="#" class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 sm:px-8">
-                                        Get started
-                                    </a>
-                                    <a href="#" class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8">
-                                        Live demo
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="my-4" dir="rtl">
+      <div class="flex justify-center">
+        <img :src="`/images/seu_logo.png`" class="w-11 h-11" alt="" />
+        <h1 class="mx-4 text-4xl text-gray-700">{{ $t('Estibanah') }}</h1>
+      </div>
+      <h1 class="text-center text-3xl font-light my-4">
+        {{ $t('Survey tool for people')}} <br />{{ $t('who hate data gathering')}}
+      </h1>
+      <h3 class="my-3 text-center text-gray-600">
+        {{ $t('Save efforts, look presentable, and focus on analyzing the data that matters')}}
+      </h3>
+      <div class="flex justify-center">
+        <a
+          :href="route('login')"
+          class="
+            bg-indigo-700
+            text-white
+            w-full
+            max-w-3xl
+            mx-auto
+            rounded-md
+            text-center
+            font-bold
+            py-4
+            my-4
+          "
+          >{{ $t('Log in') }}</a
+        >
+      </div>
+      <h1 class="my-7 text-center text-3xl font-semibold text-gray-700">
+        {{ $t('All of the Important Features')}}
+      </h1>
+      <div class="max-w-3xl mx-auto">
+        <!-- This example requires Tailwind CSS v2.0+ -->
+        <ul role="list" class="divide-y divide-gray-200">
+          <li class="py-4 flex">
+            <div
+              class="
+                w-10
+                h-10
+                rounded-full
+                bg-indigo-500
+                text-white
+                flex
+                justify-center
+                pt-2
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"
+                />
+              </svg>
             </div>
-
-            <!-- Logo Cloud -->
-            <div class="bg-gray-100">
-                <div class="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-                    <p class="text-center text-sm font-semibold uppercase text-gray-500 tracking-wide">
-                        Trusted by over 5 very average small businesses
-                    </p>
-                    <div class="mt-6 grid grid-cols-2 gap-8 md:grid-cols-6 lg:grid-cols-5">
-                        <div class="col-span-1 flex justify-center md:col-span-2 lg:col-span-1">
-                            <img class="h-12" src="https://tailwindui.com/img/logos/tuple-logo-gray-400.svg" alt="Tuple" />
-                        </div>
-                        <div class="col-span-1 flex justify-center md:col-span-2 lg:col-span-1">
-                            <img class="h-12" src="https://tailwindui.com/img/logos/mirage-logo-gray-400.svg" alt="Mirage" />
-                        </div>
-                        <div class="col-span-1 flex justify-center md:col-span-2 lg:col-span-1">
-                            <img class="h-12" src="https://tailwindui.com/img/logos/statickit-logo-gray-400.svg" alt="StaticKit" />
-                        </div>
-                        <div class="col-span-1 flex justify-center md:col-span-2 md:col-start-2 lg:col-span-1">
-                            <img class="h-12" src="https://tailwindui.com/img/logos/transistor-logo-gray-400.svg" alt="Transistor" />
-                        </div>
-                        <div class="col-span-2 flex justify-center md:col-span-2 md:col-start-4 lg:col-span-1">
-                            <img class="h-12" src="https://tailwindui.com/img/logos/workcation-logo-gray-400.svg" alt="Workcation" />
-                        </div>
-                    </div>
-                </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-gray-900">
+                {{ $t('Amazon AWS storage and backup')}}
+              </p>
+              <p class="text-sm text-gray-500">
+                {{ $t('so that you never worry about losing data.')}}
+              </p>
             </div>
+          </li>
 
-            <!-- Alternating Feature Sections -->
-            <div class="relative pt-16 pb-32 overflow-hidden">
-                <div aria-hidden="true" class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-gray-100" />
-                <div class="relative">
-                    <div class="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
-                        <div class="px-4 max-w-xl mx-auto sm:px-6 lg:py-16 lg:max-w-none lg:mx-0 lg:px-0">
-                            <div>
-                                <div>
-                  <span class="h-12 w-12 rounded-md flex items-center justify-center bg-gradient-to-r from-purple-600 to-indigo-600">
-                    <InboxIcon class="h-6 w-6 text-white" aria-hidden="true" />
-                  </span>
-                                </div>
-                                <div class="mt-6">
-                                    <h2 class="text-3xl font-extrabold tracking-tight text-gray-900">
-                                        Stay on top of customer support
-                                    </h2>
-                                    <p class="mt-4 text-lg text-gray-500">
-                                        Semper curabitur ullamcorper posuere nunc sed. Ornare iaculis bibendum malesuada faucibus lacinia porttitor. Pulvinar laoreet sagittis viverra duis. In venenatis sem arcu pretium pharetra at. Lectus viverra dui tellus ornare pharetra.
-                                    </p>
-                                    <div class="mt-6">
-                                        <a href="#" class="inline-flex bg-gradient-to-r from-purple-600 to-indigo-600 bg-origin-border px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white hover:from-purple-700 hover:to-indigo-700">
-                                            Get started
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-8 border-t border-gray-200 pt-6">
-                                <blockquote>
-                                    <div>
-                                        <p class="text-base text-gray-500">
-                                            &ldquo;Cras velit quis eros eget rhoncus lacus ultrices sed diam. Sit orci risus aenean curabitur donec aliquet. Mi venenatis in euismod ut.&rdquo;
-                                        </p>
-                                    </div>
-                                    <footer class="mt-3">
-                                        <div class="flex items-center space-x-3">
-                                            <div class="flex-shrink-0">
-                                                <img class="h-6 w-6 rounded-full" src="https://images.unsplash.com/photo-1509783236416-c9ad59bae472?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80" alt="" />
-                                            </div>
-                                            <div class="text-base font-medium text-gray-700">
-                                                Marcia Hill, Digital Marketing Manager
-                                            </div>
-                                        </div>
-                                    </footer>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <div class="mt-12 sm:mt-16 lg:mt-0">
-                            <div class="pl-4 -mr-48 sm:pl-6 md:-mr-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
-                                <img class="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none" src="https://tailwindui.com/img/component-images/inbox-app-screenshot-1.jpg" alt="Inbox user interface" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-24">
-                    <div class="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-24">
-                        <div class="px-4 max-w-xl mx-auto sm:px-6 lg:py-32 lg:max-w-none lg:mx-0 lg:px-0 lg:col-start-2">
-                            <div>
-                                <div>
-                  <span class="h-12 w-12 rounded-md flex items-center justify-center bg-gradient-to-r from-purple-600 to-indigo-600">
-                    <SparklesIcon class="h-6 w-6 text-white" aria-hidden="true" />
-                  </span>
-                                </div>
-                                <div class="mt-6">
-                                    <h2 class="text-3xl font-extrabold tracking-tight text-gray-900">
-                                        Better understand your customers
-                                    </h2>
-                                    <p class="mt-4 text-lg text-gray-500">
-                                        Semper curabitur ullamcorper posuere nunc sed. Ornare iaculis bibendum malesuada faucibus lacinia porttitor. Pulvinar laoreet sagittis viverra duis. In venenatis sem arcu pretium pharetra at. Lectus viverra dui tellus ornare pharetra.
-                                    </p>
-                                    <div class="mt-6">
-                                        <a href="#" class="inline-flex bg-gradient-to-r from-purple-600 to-indigo-600 bg-origin-border px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white hover:from-purple-700 hover:to-indigo-700">
-                                            Get started
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-12 sm:mt-16 lg:mt-0 lg:col-start-1">
-                            <div class="pr-4 -ml-48 sm:pr-6 md:-ml-16 lg:px-0 lg:m-0 lg:relative lg:h-full">
-                                <img class="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:right-0 lg:h-full lg:w-auto lg:max-w-none" src="https://tailwindui.com/img/component-images/inbox-app-screenshot-2.jpg" alt="Customer profile user interface" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <li class="py-4 flex">
+            <div
+              class="
+                w-10
+                h-10
+                rounded-full
+                bg-indigo-500
+                text-white
+                flex
+                justify-center
+                pt-2
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"
+                />
+              </svg>
             </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-gray-900">
+                {{ $t('Advanced analytical tools')}}
+              </p>
+              <p class="text-sm text-gray-500">
+                {{ $t('to enable you to make the right decision')}}
+              </p>
+            </div>
+          </li>
 
-            <!-- Gradient Feature Section -->
-            <div class="bg-gradient-to-r from-purple-800 to-indigo-700">
-                <div class="max-w-4xl mx-auto px-4 py-16 sm:px-6 sm:pt-20 sm:pb-24 lg:max-w-7xl lg:pt-24 lg:px-8">
-                    <h2 class="text-3xl font-extrabold text-white tracking-tight">
-                        Inbox support built for efficiency
-                    </h2>
-                    <p class="mt-4 max-w-3xl text-lg text-purple-200">
-                        Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus. Et magna sit morbi lobortis. Blandit aliquam sit nisl euismod mattis in.
-                    </p>
-                    <div class="mt-12 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-16">
-                        <div v-for="feature in features" :key="feature.name">
-                            <div>
-                <span class="flex items-center justify-center h-12 w-12 rounded-md bg-white bg-opacity-10">
-                  <component :is="feature.icon" class="h-6 w-6 text-white" aria-hidden="true" />
-                </span>
-                            </div>
-                            <div class="mt-6">
-                                <h3 class="text-lg font-medium text-white">{{ feature.name }}</h3>
-                                <p class="mt-2 text-base text-purple-200">
-                                    {{ feature.description }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <li class="py-4 flex">
+            <div
+              class="
+                w-10
+                h-10
+                rounded-full
+                bg-indigo-500
+                text-white
+                flex
+                justify-center
+                pt-2
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
+                />
+              </svg>
             </div>
-
-            <!-- Stats section -->
-            <div class="relative bg-gray-900">
-                <div class="h-80 absolute inset-x-0 bottom-0 xl:top-0 xl:h-full">
-                    <div class="h-full w-full xl:grid xl:grid-cols-2">
-                        <div class="h-full xl:relative xl:col-start-2">
-                            <img class="h-full w-full object-cover opacity-25 xl:absolute xl:inset-0" src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2830&q=80&sat=-100" alt="People working on laptops" />
-                            <div aria-hidden="true" class="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-gray-900 xl:inset-y-0 xl:left-0 xl:h-full xl:w-32 xl:bg-gradient-to-r" />
-                        </div>
-                    </div>
-                </div>
-                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8 xl:grid xl:grid-cols-2 xl:grid-flow-col-dense xl:gap-x-8">
-                    <div class="relative pt-12 pb-64 sm:pt-24 sm:pb-64 xl:col-start-1 xl:pb-24">
-                        <h2 class="text-sm font-semibold tracking-wide uppercase">
-                            <span class="bg-gradient-to-r from-purple-300 to-indigo-300 bg-clip-text text-transparent">Valuable Metrics</span>
-                        </h2>
-                        <p class="mt-3 text-3xl font-extrabold text-white">Get actionable data that will help grow your business</p>
-                        <p class="mt-5 text-lg text-gray-300">Rhoncus sagittis risus arcu erat lectus bibendum. Ut in adipiscing quis in viverra tristique sem. Ornare feugiat viverra eleifend fusce orci in quis amet. Sit in et vitae tortor, massa. Dapibus laoreet amet lacus nibh integer quis. Eu vulputate diam sit tellus quis at.</p>
-                        <div class="mt-12 grid grid-cols-1 gap-y-12 gap-x-6 sm:grid-cols-2">
-                            <p v-for="item in metrics" :key="item.id">
-                                <span class="block text-2xl font-bold text-white">{{ item.stat }}</span>
-                                <span class="mt-1 block text-base text-gray-300"
-                                ><span class="font-medium text-white">{{ item.emphasis }}</span> {{ item.rest }}</span
-                                >
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-gray-900">{{ $t('Multilingual') }}</p>
+              <p class="text-sm text-gray-500">
+                {{ $t('so that your audience never get lost in translation.')}}
+              </p>
             </div>
-
-            <!-- CTA Section -->
-            <div class="bg-white">
-                <div class="max-w-4xl mx-auto py-16 px-4 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 lg:flex lg:items-center lg:justify-between">
-                    <h2 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                        <span class="block">Ready to get started?</span>
-                        <span class="block bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">Get in touch or create an account.</span>
-                    </h2>
-                    <div class="mt-6 space-y-4 sm:space-y-0 sm:flex sm:space-x-5">
-                        <a href="#" class="flex items-center justify-center bg-gradient-to-r from-purple-600 to-indigo-600 bg-origin-border px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white hover:from-purple-700 hover:to-indigo-700">
-                            Learn more
-                        </a>
-                        <a href="#" class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-800 bg-indigo-50 hover:bg-indigo-100">
-                            Get started
-                        </a>
-                    </div>
-                </div>
+          </li>
+          <li class="py-4 flex">
+            <div
+              class="
+                w-10
+                h-10
+                rounded-full
+                bg-indigo-500
+                text-white
+                flex
+                justify-center
+                pt-2
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9.504 1.132a1 1 0 01.992 0l1.75 1a1 1 0 11-.992 1.736L10 3.152l-1.254.716a1 1 0 11-.992-1.736l1.75-1zM5.618 4.504a1 1 0 01-.372 1.364L5.016 6l.23.132a1 1 0 11-.992 1.736L4 7.723V8a1 1 0 01-2 0V6a.996.996 0 01.52-.878l1.734-.99a1 1 0 011.364.372zm8.764 0a1 1 0 011.364-.372l1.733.99A1.002 1.002 0 0118 6v2a1 1 0 11-2 0v-.277l-.254.145a1 1 0 11-.992-1.736l.23-.132-.23-.132a1 1 0 01-.372-1.364zm-7 4a1 1 0 011.364-.372L10 8.848l1.254-.716a1 1 0 11.992 1.736L11 10.58V12a1 1 0 11-2 0v-1.42l-1.246-.712a1 1 0 01-.372-1.364zM3 11a1 1 0 011 1v1.42l1.246.712a1 1 0 11-.992 1.736l-1.75-1A1 1 0 012 14v-2a1 1 0 011-1zm14 0a1 1 0 011 1v2a1 1 0 01-.504.868l-1.75 1a1 1 0 11-.992-1.736L16 13.42V12a1 1 0 011-1zm-9.618 5.504a1 1 0 011.364-.372l.254.145V16a1 1 0 112 0v.277l.254-.145a1 1 0 11.992 1.736l-1.735.992a.995.995 0 01-1.022 0l-1.735-.992a1 1 0 01-.372-1.364z"
+                  clip-rule="evenodd"
+                />
+              </svg>
             </div>
-        </main>
-
-        <footer class="bg-gray-50" aria-labelledby="footer-heading">
-            <h2 id="footer-heading" class="sr-only">Footer</h2>
-            <div class="max-w-7xl mx-auto pt-16 pb-8 px-4 sm:px-6 lg:pt-24 lg:px-8">
-                <div class="xl:grid xl:grid-cols-3 xl:gap-8">
-                    <div class="grid grid-cols-2 gap-8 xl:col-span-2">
-                        <div class="md:grid md:grid-cols-2 md:gap-8">
-                            <div>
-                                <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                                    Solutions
-                                </h3>
-                                <ul role="list" class="mt-4 space-y-4">
-                                    <li v-for="item in footerNavigation.solutions" :key="item.name">
-                                        <a :href="item.href" class="text-base text-gray-500 hover:text-gray-900">
-                                            {{ item.name }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="mt-12 md:mt-0">
-                                <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                                    Support
-                                </h3>
-                                <ul role="list" class="mt-4 space-y-4">
-                                    <li v-for="item in footerNavigation.support" :key="item.name">
-                                        <a :href="item.href" class="text-base text-gray-500 hover:text-gray-900">
-                                            {{ item.name }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="md:grid md:grid-cols-2 md:gap-8">
-                            <div>
-                                <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                                    Company
-                                </h3>
-                                <ul role="list" class="mt-4 space-y-4">
-                                    <li v-for="item in footerNavigation.company" :key="item.name">
-                                        <a :href="item.href" class="text-base text-gray-500 hover:text-gray-900">
-                                            {{ item.name }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="mt-12 md:mt-0">
-                                <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                                    Legal
-                                </h3>
-                                <ul role="list" class="mt-4 space-y-4">
-                                    <li v-for="item in footerNavigation.legal" :key="item.name">
-                                        <a :href="item.href" class="text-base text-gray-500 hover:text-gray-900">
-                                            {{ item.name }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-12 xl:mt-0">
-                        <h3 class="text-sm font-semibold text-gray-400 tracking-wider uppercase">
-                            Subscribe to our newsletter
-                        </h3>
-                        <p class="mt-4 text-base text-gray-500">
-                            The latest news, articles, and resources, sent to your inbox weekly.
-                        </p>
-                        <form class="mt-4 sm:flex sm:max-w-md">
-                            <label for="email-address" class="sr-only">Email address</label>
-                            <input type="email" name="email-address" id="email-address" autocomplete="email" required="" class="appearance-none min-w-0 w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-4 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:placeholder-gray-400" placeholder="Enter your email" />
-                            <div class="mt-3 rounded-md sm:mt-0 sm:ml-3 sm:flex-shrink-0">
-                                <button type="submit" class="w-full flex items-center justify-center bg-gradient-to-r from-purple-600 to-indigo-600 bg-origin-border px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white hover:from-purple-700 hover:to-indigo-700">
-                                    Subscribe
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="mt-12 border-t border-gray-200 pt-8 md:flex md:items-center md:justify-between lg:mt-16">
-                    <div class="flex space-x-6 md:order-2">
-                        <a v-for="item in footerNavigation.social" :key="item.name" :href="item.href" class="text-gray-400 hover:text-gray-500">
-                            <span class="sr-only">{{ item.name }}</span>
-                            <component :is="item.icon" class="h-6 w-6" aria-hidden="true" />
-                        </a>
-                    </div>
-                    <p class="mt-8 text-base text-gray-400 md:mt-0 md:order-1">
-                        &copy; 2020 Workflow, Inc. All rights reserved.
-                    </p>
-                </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-gray-900">
+                {{ $t('integrated with many services such as Microsoft excel and tableu')}}
+              </p>
+              <p class="text-sm text-gray-500">{{ $t('to benefit as much as you can') }}</p>
             </div>
-        </footer>
+          </li>
+        </ul>
+      </div>
+      <!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+      <div class="bg-white py-16 px-4 overflow-hidden sm:px-6 lg:px-8 lg:py-24">
+        <div class="relative max-w-xl mx-auto">
+          <div class="text-center">
+            <h2
+              class="
+                text-3xl
+                font-extrabold
+                tracking-tight
+                text-gray-900
+                sm:text-4xl
+              "
+            >
+              {{ $t('Contact US')}}
+            </h2>
+            <p class="mt-4 text-lg leading-6 text-gray-500">
+              {{ $t('With any thoughts regarding this project')}}
+            </p>
+          </div>
+          <div class="mt-12">
+            <form
+              action="#"
+              method="POST"
+              class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
+            >
+              <div>
+                <label
+                  for="first-name"
+                  class="block text-sm font-medium text-gray-700"
+                  >{{ $t('First name') }}</label
+                >
+                <div class="mt-1">
+                  <input
+                    type="text"
+                    name="first-name"
+                    id="first-name"
+                    autocomplete="given-name"
+                    class="
+                      py-3
+                      px-4
+                      block
+                      w-full
+                      shadow-sm
+                      focus:ring-indigo-500 focus:border-indigo-500
+                      border-gray-300
+                      rounded-md
+                    "
+                  />
+                </div>
+              </div>
+              <div>
+                <label
+                  for="last-name"
+                  class="block text-sm font-medium text-gray-700"
+                  >{{ $t('Last name') }}</label
+                >
+                <div class="mt-1">
+                  <input
+                    type="text"
+                    name="last-name"
+                    id="last-name"
+                    autocomplete="family-name"
+                    class="
+                      py-3
+                      px-4
+                      block
+                      w-full
+                      shadow-sm
+                      focus:ring-indigo-500 focus:border-indigo-500
+                      border-gray-300
+                      rounded-md
+                    "
+                  />
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label
+                  for="company"
+                  class="block text-sm font-medium text-gray-700"
+                  >{{ $t('Company') }}</label
+                >
+                <div class="mt-1">
+                  <input
+                    type="text"
+                    name="company"
+                    id="company"
+                    autocomplete="organization"
+                    class="
+                      py-3
+                      px-4
+                      block
+                      w-full
+                      shadow-sm
+                      focus:ring-indigo-500 focus:border-indigo-500
+                      border-gray-300
+                      rounded-md
+                    "
+                  />
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-gray-700"
+                  >{{ $t('Email') }}</label
+                >
+                <div class="mt-1">
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    class="
+                      py-3
+                      px-4
+                      block
+                      w-full
+                      shadow-sm
+                      focus:ring-indigo-500 focus:border-indigo-500
+                      border-gray-300
+                      rounded-md
+                    "
+                  />
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label
+                  for="phone-number"
+                  class="block text-sm font-medium text-gray-700"
+                  >{{ $t('Phone Number') }}</label
+                >
+                <div class="mt-1 relative rounded-md shadow-sm">
+                  <div class="absolute inset-y-0 left-0 flex items-center">
+                    <label for="country" class="sr-only">{{ $t('Country') }}</label>
+                    <select
+                      id="country"
+                      name="country"
+                      class="
+                        h-full
+                        py-0
+                        pl-4
+                        pr-8
+                        border-transparent
+                        bg-transparent
+                        text-gray-500
+                        focus:ring-indigo-500 focus:border-indigo-500
+                        rounded-md
+                      "
+                    >
+                      <option>{{ $t('KSA')}}</option>
+                      <option>{{ $t('UAE')}}</option>
+                      <option>{{ $t('BAH')}}</option>
+                    </select>
+                  </div>
+                  <input
+                    type="text"
+                    name="phone-number"
+                    id="phone-number"
+                    autocomplete="tel"
+                    class="
+                      py-3
+                      px-4
+                      block
+                      w-full
+                      pl-20
+                      focus:ring-indigo-500 focus:border-indigo-500
+                      border-gray-300
+                      rounded-md
+                    "
+                    placeholder="+1 (555) 987-6543"
+                  />
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+                <label
+                  for="message"
+                  class="block text-sm font-medium text-gray-700"
+                  >{{ $t('Message') }}</label
+                >
+                <div class="mt-1">
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="4"
+                    class="
+                      py-3
+                      px-4
+                      block
+                      w-full
+                      shadow-sm
+                      focus:ring-indigo-500 focus:border-indigo-500
+                      border border-gray-300
+                      rounded-md
+                    "
+                  ></textarea>
+                </div>
+              </div>
+              <div class="sm:col-span-2">
+              </div>
+              <div class="sm:col-span-2">
+                <button
+                  type="button"
+                  class="
+                    w-full
+                    inline-flex
+                    items-center
+                    justify-center
+                    px-6
+                    py-3
+                    border border-transparent
+                    rounded-md
+                    shadow-sm
+                    text-base
+                    font-medium
+                    text-white
+                    bg-indigo-600
+                    hover:bg-indigo-700
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-offset-2
+                    focus:ring-indigo-500
+                  "
+                >
+                  {{ $t("Let's talk")}}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <p class="text-center text-gray-500">{{ $t('&copy 2021 Estibanah LLC')}}.</p>
     </div>
+
 </template>
 
 <script>
